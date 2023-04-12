@@ -122,7 +122,7 @@ function addMensagemRenderizada() {
     const elementoResposta = document.querySelector(".resposta-aqui");
 
     elementoResposta.innerHTML += `
-        <div class="mensagem">
+        <div class="mensagem" data-test="message">
             <div class="hora">(${time})</div>
             <div class="conteudo">${nomeUSuario} diz:</div>
             <div class="conteudo">${textoMensagem}</div>

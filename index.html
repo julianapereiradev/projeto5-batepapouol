@@ -54,8 +54,10 @@
 
 
     <div class="enviar-mensagem">
-        <input class="texto-input" type="text" placeholder="Escreva aqui..." />
-        <ion-icon class="icon-send" onclick="enviarMsg()" name="paper-plane-outline"></ion-icon>
+        <input class="texto-input" type="text" placeholder="Escreva aqui..." data-test="input-message" />
+        <button onclick="enviarMsg()" data-test="send-message" >
+            <ion-icon class="icon-send" name="paper-plane-outline"></ion-icon>
+        </button>
     </div>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
