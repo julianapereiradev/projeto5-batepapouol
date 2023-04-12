@@ -18,7 +18,7 @@
 <body>
     <div class="topo">
         <div class="esquerda">
-      <img src="./images/uol-logo.png" alt="">
+            <img src="./images/uol-logo.png" alt="">
         </div>
         <div class="direita">
             <ion-icon class="icon-people" name="people"></ion-icon>
@@ -30,130 +30,32 @@
 
         <div class="mensagem">
             <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
+            <div class="conteudo">João diz:</div>
             <div class="conteudo">Oiiii</div>
         </div>
 
         <div class="mensagem status-chamada">
             <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
-
-        <div class="mensagem status-chamada">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
+            <div class="conteudo">João diz:</div>
             <div class="conteudo">Oiiii</div>
         </div>
 
         <div class="mensagem status-privado">
             <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João reservadamente diz:</div>
+            <div class="conteudo">João reservadamente diz:</div>
             <div class="conteudo">Oiiii</div>
         </div>
 
-        <div class="mensagem status-privado">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">Maria reservadamente diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
+        <div class="resposta-aqui">
 
-        <div class="mensagem">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:32:15)</div>
-             <div class="conteudo">João diz:</div>
-            <div class="conteudo">Oiiii</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:33:10)</div>
-             <div class="conteudo">Maria diz:</div>
-            <div class="conteudo">Oiiiii!</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:33:10)</div>
-             <div class="conteudo">Maria diz:</div>
-            <div class="conteudo">Tudo bem e com vc? 😊</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:33:10)</div>
-             <div class="conteudo">Maria diz:</div>
-            <div class="conteudo">Também!</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:33:10)</div>
-             <div class="conteudo">Maria diz:</div>
-            <div class="conteudo">Queria te dizer uma coisa...</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:34:27)</div>
-             <div class="conteudo">Ju diz:</div>
-            <div class="conteudo">Digue</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:34:27)</div>
-             <div class="conteudo">Ju diz:</div>
-            <div class="conteudo">Não faz isso comigo 🥺</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:34:27)</div>
-             <div class="conteudo">Ju diz:</div>
-            <div class="conteudo">Queria tanto ser seu denguinho</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:35:35)</div>
-             <div class="conteudo">Pedro diz:</div>
-            <div class="conteudo">Eu também!!!</div>
-        </div>
-
-        <div class="mensagem">
-            <div class="hora">(08:35:35)</div>
-             <div class="conteudo">Pedro diz:</div>
-            <div class="conteudo">😂😂😂</div>
         </div>
 
     </div>
 
 
     <div class="enviar-mensagem">
-        <input type="text" placeholder="Escreva aqui..." />
-        <ion-icon class="icon-send" name="paper-plane-outline"></ion-icon>
+        <input class="texto-input" type="text" placeholder="Escreva aqui..." />
+        <ion-icon class="icon-send" onclick="enviarMsg()" name="paper-plane-outline"></ion-icon>
     </div>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
