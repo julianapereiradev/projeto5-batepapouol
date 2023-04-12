@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f3f1f1;
+  font-family: 'Roboto', sans-serif;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  height: 80px;
+  box-shadow: 0 4px 9px -5px #00000052;
+  
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.esquerda {
+  display: flex;
+  margin-left: 20px;
+}
+
+.direita {
+  margin-right: 20px;
+}
+
+.icon-people {
+  height: 50px;
+  width: 50px;
+}
+
+.conversacao {
+  margin-top: 100px;
+  margin-bottom: 200px;
+}
+
+.mensagem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.status-chamada {
+  background-color: #DCDCDC;
+}
+
+.status-privado {
+  background-color: #FFDEDE;
+}
+
+.conteudo {
+  margin: 12px 6px 12px 0px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.hora {
+  display: flex;
+  align-items: center;
+  color: #999;
+  font-size: 14px;
+  margin-left: 12px;
+  margin-right: 12px;
+  font-weight: 400;
+}
+
+.enviar-mensagem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  height: 80px;
+  
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+.enviar-mensagem input {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 16px;
+}
+
+.enviar-mensagem input::placeholder {
+ color: black;
+ font-style: italic;  
+}
+
+.enviar-mensagem input:focus {
+  outline: none;
+ }
+ 
+
+.icon-send {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin-right: 20px;
+
+}
