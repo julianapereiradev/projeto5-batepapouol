@@ -3,6 +3,9 @@ axios.defaults.headers.common['Authorization'] = 'MpetnpJedREJPybUXjVJuTJE';
 
 let nomeUSuario;
 let textoMensagem;
+let carrega;
+let time
+let today
 
 
 //(início do commit): Entrada na sala
@@ -47,11 +50,11 @@ function continuaOnlineSucesso(respostaContinuaOnlineSucesso) {
 
 function continuaOnlineErro(respostaContinuaOnlineErro) {
     console.log('respostaContinuaOnlineErro aqui:', respostaContinuaOnlineErro)
-    ///// verificarNome()
+
+    // verificarNome()
 }
 
 function continuaOnline() {
-
     const continuaOnlineExiste = {
         name: nomeUSuario
     }
@@ -68,15 +71,59 @@ function continuaOnline() {
 
 
 
+//(início do commit): Buscar Mensagens
+
+setInterval(buscandoMsgs, 3000)
+
+function buscandoMsgsSucesso(respostaBuscandoMsgsSucesso) {
+    console.log('respostaBuscandoMsgsSucesso aqui:', respostaBuscandoMsgsSucesso)
+}
+
+function buscandoMsgsErro(respostaBuscandoMsgsErro) {
+    console.log('respostaBuscandoMsgsErro aqui:', respostaBuscandoMsgsErro)
+}
+
+function buscandoMsgs() {
+    today = new Date();
+    time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    const buscandoMsgsExiste = [
+            {
+                from: nomeUSuario,
+                to: "Todos", 
+                text: textoMensagem, 
+                type: "status",
+                time: time
+            },
+            {
+                from: nomeUSuario,
+                to: "Todos",
+                text: textoMensagem,
+                type: "message",
+                time: time
+            },
+    ]
+    const promiseBuscandoMsgs = axios.get(
+        'https://mock-api.driven.com.br/api/vm/uol/messages',
+        buscandoMsgsExiste
+    )
+    promiseBuscandoMsgs.then(buscandoMsgsSucesso)
+    promiseBuscandoMsgs.catch(buscandoMsgsErro)
+}
+//(fim do commit): Buscar Mensagens
+
+
+
+
 //(início do commit): Menesagem Enviada
 
 function addMensagemRenderizada() {
-
+    today = new Date();
+    time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     const elementoResposta = document.querySelector(".resposta-aqui");
 
     elementoResposta.innerHTML += `
         <div class="mensagem">
-            <div class="hora">(08:34:27)</div>
+            <div class="hora">(${time})</div>
             <div class="conteudo">${nomeUSuario} diz:</div>
             <div class="conteudo">${textoMensagem}</div>
         </div>
@@ -93,6 +140,7 @@ function sucessoNaMsgEnviada(respostaSucessoMsgEnviada) {
 
 function erroNaMsgEnviada(respostaEntradaErroMesgEnviada) {
     console.log('respostaEntradaErroMesgEnviada aqui:', respostaEntradaErroMesgEnviada)
+    carrega = window.location.reload()
 }
 
 function enviarMsg() {
@@ -101,9 +149,9 @@ function enviarMsg() {
 
     const mensagemAEnviar = {
         from: nomeUSuario,
-        to: "nome do destinatário (Todos se não for um específico)",
+        to: "(colocar Todos se não for um específico)", //ajeitar
         text: textoMensagem,
-        type: "message",
+        type: "message", //ajeitar
     }
 
     const promiseEnviarMensagem = axios.post(
