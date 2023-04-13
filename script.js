@@ -113,7 +113,7 @@ function addMensagemRenderizada() {
         elementoResposta.innerHTML += `
         <div class="mensagem" data-test="message">
             <div class="hora">(${item.time})</div>
-            <div class="conteudo">${item.from} diz:</div>
+            <div class="conteudo"><strong>${item.from}</strong> diz:</div>
             <div class="conteudo">${item.text}</div>
         </div>
     `
