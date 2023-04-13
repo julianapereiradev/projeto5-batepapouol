@@ -18,11 +18,11 @@ function entradaSucesso(respostaEntradaSucesso) {
     setInterval(continuaOnline, 5000)
 }
 
-function entradaErro(respostaEntradaErro) {
-    console.log('respostaEntradaErro aqui:', respostaEntradaErro)
+// function entradaErro(respostaEntradaErro) {
+//     console.log('respostaEntradaErro aqui:', respostaEntradaErro)
 
-    verificarNome()
-}
+//     verificarNome()
+// }
 
 function verificarNome() {
     nomeUSuario = prompt('Qual é o seu nome?')
@@ -36,7 +36,7 @@ function verificarNome() {
         verificarNomeExiste
     )
     promiseNomeExiste.then(entradaSucesso)
-    promiseNomeExiste.catch(entradaErro)
+    promiseNomeExiste.catch(verificarNome)
 }
 verificarNome()
 //(fim do commit): Entrada na sala
@@ -54,8 +54,8 @@ function continuaOnlineSucesso(respostaContinuaOnlineSucesso) {
 
 function continuaOnlineErro(respostaContinuaOnlineErro) {
     console.log('respostaContinuaOnlineErro aqui:', respostaContinuaOnlineErro)
-
-    // verificarNome()
+    carrega = window.location.reload()
+    
 }
 
 function continuaOnline() {
