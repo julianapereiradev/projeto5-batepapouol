@@ -15,6 +15,7 @@ function entradaSucesso(respostaEntradaSucesso) {
     console.log('respostaEntradaSucesso aqui:', respostaEntradaSucesso)
     buscandoMsgs()
     setInterval(buscandoMsgs, 3000)
+    setInterval(continuaOnline, 5000)
 }
 
 function entradaErro(respostaEntradaErro) {
@@ -45,7 +46,7 @@ verificarNome()
 
 //(início do commit): Manter conexão
 
-setInterval(continuaOnline, 5000)
+// setInterval(continuaOnline, 5000)
 
 function continuaOnlineSucesso(respostaContinuaOnlineSucesso) {
     console.log('respostaContinuaOnlineSucesso aqui:', respostaContinuaOnlineSucesso)
@@ -102,9 +103,10 @@ function buscandoMsgs() {
 
 function addMensagemRenderizada() {
     const elementoResposta = document.querySelector(".conversacao");
-    // elementoResposta.innerHTML = '';
+    elementoResposta.innerHTML = '';
     today = new Date();
     time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
 
     for (let i = 0; i < lista.length; i++) {
         let item = lista[i]
