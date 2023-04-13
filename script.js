@@ -6,12 +6,15 @@ let textoMensagem;
 let carrega;
 let time
 let today
+let lista = []
 
 
 //(início do commit): Entrada na sala
 
 function entradaSucesso(respostaEntradaSucesso) {
     console.log('respostaEntradaSucesso aqui:', respostaEntradaSucesso)
+    buscandoMsgs()
+    setInterval(buscandoMsgs, 3000)
 }
 
 function entradaErro(respostaEntradaErro) {
@@ -73,10 +76,11 @@ function continuaOnline() {
 
 //(início do commit): Buscar Mensagens
 
-setInterval(buscandoMsgs, 3000)
-
 function buscandoMsgsSucesso(respostaBuscandoMsgsSucesso) {
     console.log('respostaBuscandoMsgsSucesso aqui:', respostaBuscandoMsgsSucesso)
+    lista = respostaBuscandoMsgsSucesso.data
+    console.log('lista', lista)
+    addMensagemRenderizada()
 }
 
 function buscandoMsgsErro(respostaBuscandoMsgsErro) {
@@ -84,28 +88,8 @@ function buscandoMsgsErro(respostaBuscandoMsgsErro) {
 }
 
 function buscandoMsgs() {
-    today = new Date();
-    time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    const buscandoMsgsExiste = [
-            {
-                from: nomeUSuario,
-                to: "Todos", 
-                text: textoMensagem, 
-                type: "status",
-                time: time
-            },
-            {
-                from: nomeUSuario,
-                to: "Todos",
-                text: textoMensagem,
-                type: "message",
-                time: time
-            },
-    ]
     const promiseBuscandoMsgs = axios.get(
-        'https://mock-api.driven.com.br/api/vm/uol/messages',
-        buscandoMsgsExiste
-    )
+        'https://mock-api.driven.com.br/api/vm/uol/messages')
     promiseBuscandoMsgs.then(buscandoMsgsSucesso)
     promiseBuscandoMsgs.catch(buscandoMsgsErro)
 }
@@ -117,25 +101,37 @@ function buscandoMsgs() {
 //(início do commit): Menesagem Enviada
 
 function addMensagemRenderizada() {
+    const elementoResposta = document.querySelector(".conversacao");
+    // elementoResposta.innerHTML = '';
     today = new Date();
     time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    const elementoResposta = document.querySelector(".resposta-aqui");
 
-    elementoResposta.innerHTML += `
+    for (let i = 0; i < lista.length; i++) {
+        let item = lista[i]
+        elementoResposta.innerHTML += `
         <div class="mensagem" data-test="message">
-            <div class="hora">(${time})</div>
-            <div class="conteudo">${nomeUSuario} diz:</div>
-            <div class="conteudo">${textoMensagem}</div>
+            <div class="hora">(${item.time})</div>
+            <div class="conteudo">${item.from} diz:</div>
+            <div class="conteudo">${item.text}</div>
         </div>
     `
-  }
+    }
+
+
+}
+
+function respostaChegou(responseReceberResposta) {
+    lista = responseReceberResposta.data;
+    addMensagemRenderizada()
+}
 
 function sucessoNaMsgEnviada(respostaSucessoMsgEnviada) {
-
-    let dataSucessoNaMsgEnviada = JSON.parse(respostaSucessoMsgEnviada.config.data)
-    console.log(' Objeto dataSucessoNaMsgEnviada:', dataSucessoNaMsgEnviada)
-    
-    addMensagemRenderizada(dataSucessoNaMsgEnviada)
+    console.log(`A receita foi salva com sucesso com o id ${respostaSucessoMsgEnviada.data.id}!!`);
+    // lista = JSON.parse(respostaSucessoMsgEnviada.config.data)
+    // console.log(' lista como Objeto dataSucessoNaMsgEnviada:', lista)
+    // addMensagemRenderizada()
+    const promiseReceberResposta = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages')
+    promiseReceberResposta.then(respostaChegou)
 }
 
 function erroNaMsgEnviada(respostaEntradaErroMesgEnviada) {
@@ -149,9 +145,9 @@ function enviarMsg() {
 
     const mensagemAEnviar = {
         from: nomeUSuario,
-        to: "(colocar Todos se não for um específico)", //ajeitar
+        to: "Todos",
         text: textoMensagem,
-        type: "message", //ajeitar
+        type: "message",
     }
 
     const promiseEnviarMensagem = axios.post(
@@ -160,5 +156,7 @@ function enviarMsg() {
     )
     promiseEnviarMensagem.then(sucessoNaMsgEnviada)
     promiseEnviarMensagem.catch(erroNaMsgEnviada)
+
+    addMensagemRenderizada()
 }
 //(fim do commit): Menesagem Enviada
