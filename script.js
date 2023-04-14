@@ -1,52 +1,77 @@
 
 axios.defaults.headers.common['Authorization'] = 'MpetnpJedREJPybUXjVJuTJE';
 
-let nomeUSuario;
+let nomeUSuario = {
+    name: ""
+};
 let textoMensagem;
 let carrega;
-let time
-let today
-let lista = []
+let time;
+let today;
+let lista = [];
+let scrollIntoView;
+let rolarParaBaixo;
 
+////(início do código): Bônus - Tela de entrada 
+function verificarNome(buttonLoginEntrar) {
+    const nome = document.querySelector(".nomeUSuario");
+    const carregarGif = document.querySelector(".carregarGif");
+    const loginEntrar = document.querySelector(".div-login-entrar");
+    const nomeUSuarioErro = document.querySelector(".nomeUsuarioErro");
 
-//(início do commit): Entrada na sala
+    nomeUSuario.name = nome.value;
+    const promise = axios.post("https://mock-api.driven.com.br/api/vm/uol/participants", nomeUSuario);
 
-function entradaSucesso(respostaEntradaSucesso) {
-    console.log('respostaEntradaSucesso aqui:', respostaEntradaSucesso)
+    nome.classList.add("esconder");
+    buttonLoginEntrar.classList.add("esconder");
+    carregarGif.classList.remove("esconder");
+    loginEntrar.classList.remove("esconder");
+    nomeUSuarioErro.classList.add("esconder");
+    
+
+    promise.then(entradaSucesso);
+    promise.catch(respostaEntradaErro);
+}
+
+function entradaSucesso() {
+    const pagina = document.querySelector(".tela-entrada");
+    pagina.classList.add("esconder");
+    
     buscandoMsgs()
     setInterval(buscandoMsgs, 3000)
     setInterval(continuaOnline, 5000)
+
+    addMensagemRenderizada()
 }
 
-// function entradaErro(respostaEntradaErro) {
-//     console.log('respostaEntradaErro aqui:', respostaEntradaErro)
+function respostaEntradaErro() {
+    const buttonLoginEntrar = document.querySelector(".buttonLogin");
+    const nome = document.querySelector(".nomeUSuario");
+    const carregarGif = document.querySelector(".carregarGif");
+    const loginEntrar = document.querySelector(".div-login-entrar");
+    const nomeUSuarioErro = document.querySelector(".nomeUsuarioErro");
 
-//     verificarNome()
-// }
+    buttonLoginEntrar.classList.remove("esconder");
+    nome.classList.remove("esconder");
+    nomeUSuarioErro.classList.remove("esconder");
+    carregarGif.classList.add("esconder");
+    loginEntrar.classList.add("esconder");
+}
+////(fim do código): Bônus - Tela de entrada 
 
-function verificarNome() {
-    nomeUSuario = prompt('Qual é o seu nome?')
 
-    const verificarNomeExiste = {
-        name: nomeUSuario
-    }
 
-    const promiseNomeExiste = axios.post(
-        'https://mock-api.driven.com.br/api/vm/uol/participants',
-        verificarNomeExiste
+
+////(início do código): Obrigatório - Manter Conexão (status) 
+function continuaOnline() {
+   
+    const promiseContinuaOnline = axios.post(
+        'https://mock-api.driven.com.br/api/vm/uol/status',
+       nomeUSuario
     )
-    promiseNomeExiste.then(entradaSucesso)
-    promiseNomeExiste.catch(verificarNome)
+    promiseContinuaOnline.then(continuaOnlineSucesso)
+    promiseContinuaOnline.catch(continuaOnlineErro)
 }
-verificarNome()
-//(fim do commit): Entrada na sala
-
-
-
-
-//(início do commit): Manter conexão
-
-// setInterval(continuaOnline, 5000)
 
 function continuaOnlineSucesso(respostaContinuaOnlineSucesso) {
     console.log('respostaContinuaOnlineSucesso aqui:', respostaContinuaOnlineSucesso)
@@ -55,53 +80,82 @@ function continuaOnlineSucesso(respostaContinuaOnlineSucesso) {
 function continuaOnlineErro(respostaContinuaOnlineErro) {
     console.log('respostaContinuaOnlineErro aqui:', respostaContinuaOnlineErro)
     carrega = window.location.reload()
-    
+
 }
-
-function continuaOnline() {
-    const continuaOnlineExiste = {
-        name: nomeUSuario
-    }
-
-    const promiseContinuaOnline = axios.post(
-        'https://mock-api.driven.com.br/api/vm/uol/status',
-        continuaOnlineExiste
-    )
-    promiseContinuaOnline.then(continuaOnlineSucesso)
-    promiseContinuaOnline.catch(continuaOnlineErro)
-}
-//(fim do commit): Manter conexão
+////(fim do código): Obrigatório - Manter Conexão (status) 
 
 
 
 
-//(início do commit): Buscar Mensagens
-
-function buscandoMsgsSucesso(respostaBuscandoMsgsSucesso) {
-    console.log('respostaBuscandoMsgsSucesso aqui:', respostaBuscandoMsgsSucesso)
-    lista = respostaBuscandoMsgsSucesso.data
-    console.log('lista', lista)
-    addMensagemRenderizada()
-}
-
-function buscandoMsgsErro(respostaBuscandoMsgsErro) {
-    console.log('respostaBuscandoMsgsErro aqui:', respostaBuscandoMsgsErro)
-}
-
+////(início do código): Obrigatório - Buscar Mensagens 
 function buscandoMsgs() {
     const promiseBuscandoMsgs = axios.get(
         'https://mock-api.driven.com.br/api/vm/uol/messages')
     promiseBuscandoMsgs.then(buscandoMsgsSucesso)
     promiseBuscandoMsgs.catch(buscandoMsgsErro)
 }
-//(fim do commit): Buscar Mensagens
+
+function buscandoMsgsSucesso(respostaBuscandoMsgsSucesso) {
+    console.log('respostaBuscandoMsgsSucesso aqui:', respostaBuscandoMsgsSucesso)
+    
+    lista = respostaBuscandoMsgsSucesso.data
+    console.log('lista::', lista)
+
+    addMensagemRenderizada()
+}
+
+function buscandoMsgsErro(respostaBuscandoMsgsErro) {
+    console.log('respostaBuscandoMsgsErro aqui:', respostaBuscandoMsgsErro)
+}
+////(fim do código): Obrigatório - Buscar Mensagens 
 
 
 
 
-//(início do commit): Menesagem Enviada
+////(início do código): Obrigatório - Enviar Mensagens 
+function enviarMsg() {
 
+    textoMensagem = document.querySelector(".texto-input").value
+
+    const mensagemAEnviar = {
+        from: nomeUSuario.name,
+        to: "Todos",
+        text: textoMensagem,
+        type: "message",
+    }
+
+    const promiseEnviarMensagem = axios.post(
+        'https://mock-api.driven.com.br/api/vm/uol/messages',
+        mensagemAEnviar
+    )
+    promiseEnviarMensagem.then(sucessoNaMsgEnviada)
+    promiseEnviarMensagem.catch(erroNaMsgEnviada)
+
+    addMensagemRenderizada()
+}
+
+function sucessoNaMsgEnviada(respostaSucessoMsgEnviada) {
+    console.log('respostaSucessoMsgEnviada aqui:', respostaSucessoMsgEnviada)
+    const promiseReceberResposta = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages')
+    promiseReceberResposta.then(respostaChegou)
+}
+
+function respostaChegou(responseReceberResposta) {
+    lista = responseReceberResposta.data;
+    addMensagemRenderizada()
+}
+
+function erroNaMsgEnviada(respostaEntradaErroMesgEnviada) {
+    console.log('respostaEntradaErroMesgEnviada aqui:', respostaEntradaErroMesgEnviada)
+    carrega = window.location.reload()
+}
+////(fim do código): Obrigatório - Enviar Mensagens 
+
+
+
+////Código da mensagem que está renderizando na tela: 
 function addMensagemRenderizada() {
+
     const elementoResposta = document.querySelector(".conversacao");
     elementoResposta.innerHTML = '';
     today = new Date();
@@ -118,47 +172,6 @@ function addMensagemRenderizada() {
         </div>
     `
     }
-
-
+    setTimeout(() => {rolarParaBaixo = elementoResposta.querySelectorAll('.mensagem');
+        rolarParaBaixo[rolarParaBaixo.length - 1].scrollIntoView()}, 1000);
 }
-
-function respostaChegou(responseReceberResposta) {
-    lista = responseReceberResposta.data;
-    addMensagemRenderizada()
-}
-
-function sucessoNaMsgEnviada(respostaSucessoMsgEnviada) {
-    console.log(`A receita foi salva com sucesso com o id ${respostaSucessoMsgEnviada.data.id}!!`);
-    // lista = JSON.parse(respostaSucessoMsgEnviada.config.data)
-    // console.log(' lista como Objeto dataSucessoNaMsgEnviada:', lista)
-    // addMensagemRenderizada()
-    const promiseReceberResposta = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages')
-    promiseReceberResposta.then(respostaChegou)
-}
-
-function erroNaMsgEnviada(respostaEntradaErroMesgEnviada) {
-    console.log('respostaEntradaErroMesgEnviada aqui:', respostaEntradaErroMesgEnviada)
-    carrega = window.location.reload()
-}
-
-function enviarMsg() {
-
-    textoMensagem = document.querySelector(".texto-input").value
-
-    const mensagemAEnviar = {
-        from: nomeUSuario,
-        to: "Todos",
-        text: textoMensagem,
-        type: "message",
-    }
-
-    const promiseEnviarMensagem = axios.post(
-        'https://mock-api.driven.com.br/api/vm/uol/messages',
-        mensagemAEnviar
-    )
-    promiseEnviarMensagem.then(sucessoNaMsgEnviada)
-    promiseEnviarMensagem.catch(erroNaMsgEnviada)
-
-    addMensagemRenderizada()
-}
-//(fim do commit): Menesagem Enviada

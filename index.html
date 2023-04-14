@@ -16,6 +16,16 @@
 </head>
 
 <body>
+
+    <div class="tela-entrada">
+        <img src="./images/uol-logo.png" class="logo-tela-entrada" />
+        <div class="nomeUsuarioErro esconder"></div>
+        <input type="text" placeholder="Digite seu nome" class="nomeUSuario" data-test="input-name">
+        <button value="Entrar" class="buttonLogin" data-test="send-name" onclick="verificarNome(this)">Entrar</button>
+        <img src="./images/Loading_icon.gif" alt="Não foi possível carregar a imagem" class="carregarGif esconder" />
+        <div class="div-login-entrar esconder">Entrando...</div>
+    </div>
+
     <div class="topo">
         <div class="esquerda">
             <img src="./images/uol-logo.png" alt="">
@@ -25,13 +35,12 @@
         </div>
     </div>
 
-
     <div class="conversacao"></div>
 
-
     <div class="enviar-mensagem">
-        <input class="texto-input" type="text" placeholder="Escreva aqui..." data-test="input-message" />
-        <button onclick="enviarMsg()" data-test="send-message" >
+        <input class="texto-input" type="text" placeholder="Escreva aqui..." data-test="input-message" 
+        onkeydown="if (event.keyCode == 13) {document.querySelector('.btnEnviar').click()}" />
+        <button onclick="enviarMsg()" class="btnEnviar" data-test="send-message">
             <ion-icon class="icon-send" name="paper-plane-outline"></ion-icon>
         </button>
     </div>
