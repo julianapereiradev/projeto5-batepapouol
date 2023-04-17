@@ -1,6 +1,4 @@
 
-axios.defaults.headers.common['Authorization'] = 'MpetnpJedREJPybUXjVJuTJE';
-
 let nomeUSuario = {
     name: ""
 };
